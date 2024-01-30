@@ -30,13 +30,13 @@ def get_text_chunks(text):
 
 
 def get_vectorstore(chunks):
-    embeddings = OpenAIEmbeddings(OPENAI_API_KEY="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")
+    embeddings = OpenAIEmbeddings()
     vectorstore = FAISS.from_texts(texts=chunks, embedding = embeddings)
     return vectorstore
 
 
 def main():
-    # load_dotenv()
+    load_dotenv()
     # print(os.getenv("OPENAI_API_KEY"))
     # st.set_page_config(page_title="Some questions please.. :)")
     st.header("Ask your PDF :)")
@@ -63,7 +63,7 @@ def main():
     if user_question:
         with st.spinner("Wait bruh..."):
             docs = st.session_state.vectorstore.similarity_search(user_question)
-            llm = OpenAI(OPENAI_API_KEY="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")
+            llm = OpenAI()
             chain = load_qa_chain(llm, chain_type="stuff")
             response = chain.run(input_documents = docs, question=user_question)
             st.write(response)
