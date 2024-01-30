@@ -37,7 +37,7 @@ def get_vectorstore(chunks):
 
 def main():
     load_dotenv()
-    # print(os.getenv("OPENAI_API_KEY"))
+    os.getenv("OPENAI_API_KEY")
     # st.set_page_config(page_title="Some questions please.. :)")
     st.header("Ask your PDF :)")
     
