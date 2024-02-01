@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 import streamlit as st
 from PyPDF2 import PdfReader
@@ -30,14 +30,14 @@ def get_text_chunks(text):
 
 
 def get_vectorstore(chunks):
-    embeddings = OpenAIEmbeddings()
+    embeddings = OpenAIEmbeddings(OPENAI_API_KEY = "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")
     vectorstore = FAISS.from_texts(texts=chunks, embedding = embeddings)
     return vectorstore
 
 
 def main():
-    load_dotenv()
-    os.getenv("OPENAI_API_KEY")
+    # load_dotenv()
+    # os.getenv("OPENAI_API_KEY")
     # st.set_page_config(page_title="Some questions please.. :)")
     st.header("Ask your PDF :)")
     
@@ -63,7 +63,7 @@ def main():
     if user_question:
         with st.spinner("Wait bruh..."):
             docs = st.session_state.vectorstore.similarity_search(user_question)
-            llm = OpenAI()
+            llm = OpenAI(OPENAI_API_KEY = "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")
             chain = load_qa_chain(llm, chain_type="stuff")
             response = chain.run(input_documents = docs, question=user_question)
             st.write(response)
